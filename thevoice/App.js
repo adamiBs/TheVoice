@@ -17,7 +17,7 @@ export default class App extends Component<Props> {
   render() {
     return (
       <View>
-        <Button onPress={} title="Record">
+        <Button onPress={() => {}} title="Record">
           <Text>כפתור</Text>
         </Button>
       </View>
