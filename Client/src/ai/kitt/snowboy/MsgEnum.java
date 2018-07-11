@@ -12,6 +12,15 @@ public enum  MsgEnum {
     MSG_ONE,
     MSG_TWO,
     MSG_THREE,
+    MSG_FOUR,
+    MSG_FIVE,
+    MSG_TEN,
+    MSG_TWENTY,
+    MSG_THIRTY,
+    MSG_HAKLET,
+    MSG_HAYEG,
+    MSG_KISHUR,
+    MSG_SIYUM,
     MSG_ERROR,
     MSG_INFO;
 

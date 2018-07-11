@@ -192,7 +192,6 @@ public class Demo extends Activity  implements com.zello.sdk.Events {
                     activeTimes++;
                     updateLog(" ----> One " + activeTimes + " times", "green");
                     // Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
-                    showToast("One "+activeTimes);
 
                     channel = "1";
                     break;
@@ -200,7 +199,6 @@ public class Demo extends Activity  implements com.zello.sdk.Events {
                     activeTimes++;
                     updateLog(" ----> Two " + activeTimes + " times", "green");
                     // Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
-                    showToast("Two "+activeTimes);
 
                     channel = "2";
                     break;
@@ -208,9 +206,53 @@ public class Demo extends Activity  implements com.zello.sdk.Events {
                     activeTimes++;
                     updateLog(" ----> Three " + activeTimes + " times", "green");
                     // Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
-                    showToast("Three "+activeTimes);
 
                     channel = "3";
+                    break;
+                case MSG_FOUR:
+                    activeTimes++;
+                    updateLog(" ----> Four " + activeTimes + " times", "green");
+                    // Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
+                    break;
+                case MSG_FIVE:
+                    activeTimes++;
+                    updateLog(" ----> Five " + activeTimes + " times", "green");
+                    // Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
+                    break;
+                case MSG_TEN:
+                    activeTimes++;
+                    updateLog(" ----> Ten " + activeTimes + " times", "green");
+                    // Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
+                    break;
+                case MSG_TWENTY:
+                    activeTimes++;
+                    updateLog(" ----> Twenty " + activeTimes + " times", "green");
+                    // Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
+                    break;
+                case MSG_THIRTY:
+                    activeTimes++;
+                    updateLog(" ----> Thirty " + activeTimes + " times", "green");
+                    // Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
+                    break;
+                case MSG_HAKLET:
+                    activeTimes++;
+                    updateLog(" ----> Haklet " + activeTimes + " times", "green");
+                    // Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
+                    break;
+                case MSG_HAYEG:
+                    activeTimes++;
+                    updateLog(" ----> Hayeg " + activeTimes + " times", "green");
+                    // Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
+                    break;
+                case MSG_KISHUR:
+                    activeTimes++;
+                    updateLog(" ----> Kishur " + activeTimes + " times", "green");
+                    // Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
+                    break;
+                case MSG_SIYUM:
+                    activeTimes++;
+                    updateLog(" ----> Sayem " + activeTimes + " times", "green");
+                    // Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
                     break;
                 case MSG_INFO:
                     updateLog(" ----> "+message);
