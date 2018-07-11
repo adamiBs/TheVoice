@@ -12,14 +12,13 @@ import {
   View,
   Button
 } from 'react-native';
+import RNImmediatePhoneCall from 'react-native-immediate-phone-call';
 
 export default class App extends Component<Props> {
   render() {
     return (
-      <View>
-        <Button onPress={() => {}} title="Record">
-          <Text>כפתור</Text>
-        </Button>
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Button onPress={() => {RNImmediatePhoneCall.immediatePhoneCall('0542220858');}} title="Record"/>
       </View>
     );
   }
