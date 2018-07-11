@@ -31,7 +31,16 @@ public class RecordingThread {
     
     private static String strEnvWorkSpace = Constants.DEFAULT_WORK_SPACE;
     private String activeModel = strEnvWorkSpace+ACTIVE_UMDL;    
-    private String commonRes = strEnvWorkSpace+ACTIVE_RES;   
+    private String commonRes = strEnvWorkSpace+ACTIVE_RES;
+
+
+    private String oneModel = strEnvWorkSpace+ Constants.ONE_UMDL;
+    private String twoModel = strEnvWorkSpace+ Constants.TWO_UMDL;
+    private String threeModel = strEnvWorkSpace+ Constants.THREE_UMDL;
+
+    private SnowboyDetect oneDetector = new SnowboyDetect(commonRes, oneModel);
+    private SnowboyDetect twoDetector = new SnowboyDetect(commonRes, twoModel);
+    private SnowboyDetect threeDetector = new SnowboyDetect(commonRes, threeModel);
     
     private SnowboyDetect detector = new SnowboyDetect(commonRes, activeModel);
     private MediaPlayer player = new MediaPlayer();
@@ -43,6 +52,17 @@ public class RecordingThread {
         detector.SetSensitivity("0.6");
         detector.SetAudioGain(1);
         detector.ApplyFrontend(true);
+
+        oneDetector.SetSensitivity("0.4");
+        oneDetector.SetAudioGain(1);
+        oneDetector.ApplyFrontend(true);
+        twoDetector.SetSensitivity("0.5");
+        twoDetector.SetAudioGain(1);
+        twoDetector.ApplyFrontend(true);
+        threeDetector.SetSensitivity("0.5");
+        threeDetector.SetAudioGain(1);
+        threeDetector.ApplyFrontend(true);
+
         try {
             player.setDataSource(strEnvWorkSpace+"ding.wav");
             player.prepare();
@@ -110,6 +130,11 @@ public class RecordingThread {
 
         long shortsRead = 0;
         detector.Reset();
+
+        oneDetector.Reset();
+        twoDetector.Reset();
+        threeDetector.Reset();
+
         while (shouldContinue) {
             record.read(audioBuffer, 0, audioBuffer.length);
 
@@ -124,21 +149,9 @@ public class RecordingThread {
             shortsRead += audioData.length;
 
             // Snowboy hotword detection.
-            int result = detector.RunDetection(audioData, audioData.length);
-
-            if (result == -2) {
-                // post a higher CPU usage:
-                // sendMessage(MsgEnum.MSG_VAD_NOSPEECH, null);
-            } else if (result == -1) {
-                sendMessage(MsgEnum.MSG_ERROR, "Unknown Detection Error");
-            } else if (result == 0) {
-                // post a higher CPU usage:
-                // sendMessage(MsgEnum.MSG_VAD_SPEECH, null);
-            } else if (result > 0) {
-                sendMessage(MsgEnum.MSG_ACTIVE, null);
-                Log.i("Snowboy: ", "Hotword " + Integer.toString(result) + " detected!");
-                player.start();
-            }
+            RunDetection(oneDetector, audioData, MsgEnum.MSG_ONE);
+            RunDetection(twoDetector, audioData, MsgEnum.MSG_TWO);
+            RunDetection(threeDetector, audioData, MsgEnum.MSG_THREE);
         }
 
         record.stop();
@@ -148,5 +161,23 @@ public class RecordingThread {
             listener.stop();
         }
         Log.v(TAG, String.format("Recording stopped. Samples read: %d", shortsRead));
+    }
+
+    private void RunDetection(SnowboyDetect detector, short[] audioData, MsgEnum detectionMessage) {
+        int result = detector.RunDetection(audioData, audioData.length);
+
+        if (result == -2) {
+            // post a higher CPU usage:
+            // sendMessage(MsgEnum.MSG_VAD_NOSPEECH, null);
+        } else if (result == -1) {
+            sendMessage(MsgEnum.MSG_ERROR, "Unknown Detection Error");
+        } else if (result == 0) {
+            // post a higher CPU usage:
+            // sendMessage(MsgEnum.MSG_VAD_SPEECH, null);
+        } else if (result > 0) {
+            sendMessage(detectionMessage, null);
+            Log.i("Snowboy: ", "Hotword " + Integer.toString(result) + " detected!");
+            player.start();
+        }
     }
 }

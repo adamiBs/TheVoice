@@ -9,6 +9,9 @@ public enum  MsgEnum {
     MSG_RECORD_START,
     MSG_RECORD_STOP,
     MSG_ACTIVE,
+    MSG_ONE,
+    MSG_TWO,
+    MSG_THREE,
     MSG_ERROR,
     MSG_INFO;
 

@@ -169,6 +169,24 @@ public class Demo extends Activity {
                     // Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
                     showToast("Active "+activeTimes);
                     break;
+                case MSG_ONE:
+                    activeTimes++;
+                    updateLog(" ----> One " + activeTimes + " times", "green");
+                    // Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
+                    showToast("One "+activeTimes);
+                    break;
+                case MSG_TWO:
+                    activeTimes++;
+                    updateLog(" ----> Two " + activeTimes + " times", "green");
+                    // Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
+                    showToast("Two "+activeTimes);
+                    break;
+                case MSG_THREE:
+                    activeTimes++;
+                    updateLog(" ----> Three " + activeTimes + " times", "green");
+                    // Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
+                    showToast("Three "+activeTimes);
+                    break;
                 case MSG_INFO:
                     updateLog(" ----> "+message);
                     break;
