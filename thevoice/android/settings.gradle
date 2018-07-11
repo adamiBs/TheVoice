@@ -1,5 +1,7 @@
 rootProject.name = 'thevoice'
 include ':react-native-immediate-phone-call'
 project(':react-native-immediate-phone-call').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-immediate-phone-call/android')
+include ':react-native-snowboy'
+project(':react-native-snowboy').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-snowboy')
 
 include ':app'
