@@ -17,11 +17,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.content.Context;
 
+import com.zello.sdk.*;
+
 import ai.kitt.snowboy.audio.AudioDataSaver;
 import ai.kitt.snowboy.demo.R;
+import zello.handle.ZelloHandler;
 
 
-public class Demo extends Activity {
+public class Demo extends Activity  implements com.zello.sdk.Events {
 
     private Button record_button;
     private Button play_button;
@@ -35,6 +38,8 @@ public class Demo extends Activity {
     private RecordingThread recordingThread;
     private PlaybackThread playbackThread;
 
+    private final AppState _appState = new AppState();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +49,24 @@ public class Demo extends Activity {
         
         setProperVolume();
 
-          AppResCopy.copyResFromAssetsToSD(this);
+        AppResCopy.copyResFromAssetsToSD(this);
         
         activeTimes = 0;
         recordingThread = new RecordingThread(handle, new AudioDataSaver());
         playbackThread = new PlaybackThread();
+
+        Zello.getInstance().configure("net.loudtalks", this);
+
+        String network = "hackthevoice";
+        String username = "amit.toren12";
+        String password = "1234";
+        boolean bIsConnected = Zello.getInstance().signIn(network, username, password, true);
+
+        Zello.getInstance().getAppState(_appState);
+        if (bIsConnected) {
+            Zello.getInstance().setStatus(Status.AVAILABLE);
+        }
+        //Zello.getInstance().subscribeToEvents(this.onSelectedContactChanged);
     }
     
     void showToast(CharSequence msg) {
@@ -162,6 +180,7 @@ public class Demo extends Activity {
         @Override
         public void handleMessage(Message msg) {
             MsgEnum message = MsgEnum.getMsgEnum(msg.what);
+            String channel = "-1";
             switch(message) {
                 case MSG_ACTIVE:
                     activeTimes++;
@@ -174,18 +193,24 @@ public class Demo extends Activity {
                     updateLog(" ----> One " + activeTimes + " times", "green");
                     // Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
                     showToast("One "+activeTimes);
+
+                    channel = "1";
                     break;
                 case MSG_TWO:
                     activeTimes++;
                     updateLog(" ----> Two " + activeTimes + " times", "green");
                     // Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
                     showToast("Two "+activeTimes);
+
+                    channel = "2";
                     break;
                 case MSG_THREE:
                     activeTimes++;
                     updateLog(" ----> Three " + activeTimes + " times", "green");
                     // Toast.makeText(Demo.this, "Active "+activeTimes, Toast.LENGTH_SHORT).show();
                     showToast("Three "+activeTimes);
+
+                    channel = "3";
                     break;
                 case MSG_INFO:
                     updateLog(" ----> "+message);
@@ -202,6 +227,17 @@ public class Demo extends Activity {
                 default:
                     super.handleMessage(msg);
                     break;
+             }
+
+             if (channel != "-1") {
+                 ZelloHandler.ConnectChannel(channel);
+                 Zello.getInstance().beginMessage();
+                 try {
+                     Thread.sleep(2000);
+                 } catch (InterruptedException e) {
+                     e.printStackTrace();
+                 }
+                 Zello.getInstance().endMessage();
              }
         }
     };
@@ -267,4 +303,44 @@ public class Demo extends Activity {
          recordingThread.stopRecording();
          super.onDestroy();
      }
+
+    @Override
+    public void onSelectedContactChanged() {
+
+    }
+
+    @Override
+    public void onMessageStateChanged() {
+
+    }
+
+    @Override
+    public void onAppStateChanged() {
+
+    }
+
+    @Override
+    public void onLastContactsTabChanged(Tab tab) {
+
+    }
+
+    @Override
+    public void onContactsChanged() {
+        updateLog("Changed channel");
+    }
+
+    @Override
+    public void onAudioStateChanged() {
+        updateLog("SIMA SHELHA");
+    }
+
+    @Override
+    public void onMicrophonePermissionNotGranted() {
+
+    }
+
+    @Override
+    public void onBluetoothAccessoryStateChanged(BluetoothAccessoryType bluetoothAccessoryType, BluetoothAccessoryState bluetoothAccessoryState, String s, String s1) {
+
+    }
 }
